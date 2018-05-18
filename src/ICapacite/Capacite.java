@@ -4,17 +4,20 @@ public abstract class Capacite implements ICapacite{
 	private String nomCapacite;
 	private String description;
 	private int degat;
+	private boolean dejaUtilise;
 	
 	public Capacite(String nom, String description, int degat) {
 		setNomCapacite(nom);
 		setDescription(description);
 		setDegat(degat);
+		setDejaUtilise(false);
 	}
 	
 	public Capacite(String nom, String description) {
 		setNomCapacite(nom);
 		setDescription(description);
 		setDegat(0);
+		setDejaUtilise(false);
 	}
 	
 	private void setDegat(int degat) {
@@ -65,6 +68,25 @@ public abstract class Capacite implements ICapacite{
 		else
 			str = "; Degat: " + degat; 
 		return "Capacite : [Nom: " + this.nomCapacite+"; Description: " + this.description + str + "]"; 
+	}
+	
+	public boolean equals(Object obj) {
+		
+		if (obj==null)
+			return false;
+		if(!(obj instanceof ICapacite))
+			return false;
+		if(((ICapacite) obj).getNomCapacite().equals(this.getNomCapacite()))
+			return true;
+		return false;
+	}
+
+	public boolean getDejaUtilise() {
+		return dejaUtilise;
+	}
+
+	public void setDejaUtilise(boolean dejaUtilise) {
+		this.dejaUtilise = dejaUtilise;
 	}
 
 }

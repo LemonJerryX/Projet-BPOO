@@ -1,7 +1,7 @@
 package HearthstoneException;
 
 
-public abstract class HearthstoneException extends Exception{
+public class HearthstoneException extends Exception{
 	public HearthstoneException(String msg) {
 		super(msg);
 	}
