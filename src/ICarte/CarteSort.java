@@ -1,65 +1,25 @@
 package ICarte;
-import HearthstoneException.HearthstoneException;
-import IJoueur.IJoueur;
+import ICapacite.ICapacite;
 
 public abstract class CarteSort extends CarteBase{
 	
-	public CarteSort(String nom, int cout){
+	private ICapacite capacite;
+	
+	public CarteSort(String nom, int cout, ICapacite capacite){
 		super(nom,cout);
+		setCapacite(capacite);
 	}
 	
-	@Override
-	public String getNom() {
-		// TODO Auto-generated method stub
-		return null;
+	public ICapacite getCapacite() {
+		return capacite;
 	}
 
-	@Override
-	public IJoueur getProprietaire() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setCapacite(ICapacite capacite) {
+		this.capacite = capacite;
 	}
 
-	@Override
-	public int getCout() {
-		// TODO Auto-generated method stub
-		return 0;
+	public String toString() {
+		return super.toString() + capacite +"]";
 	}
-
-	@Override
-	public boolean disparait() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void executerEffetDebutTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void executerEffetDisparition(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void executerEffetFinTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

@@ -1,66 +1,84 @@
 package ICarte;
-import HearthstoneException.HearthstoneException;
-import IJoueur.IJoueur;
+import ICapacite.ICapacite;
+
 
 public abstract class CarteServiteur extends CarteBase{
+	private int attaque;
+	private int vieMax;
+	private int vieActuelle;
+	private ICapacite capacite;
+	private boolean jouable;
 	
-	public CarteServiteur(String nom, int cout){
+	public CarteServiteur(String nom, int cout, int attaque, int vieMax){
 		super(nom,cout);
+		setAttaque(attaque);
+		setVieMax(vieMax);
+		setVieActuelle(vieMax);
+		this.capacite = null;
+		setJouable(true);
 	}
 	
-
-	@Override
-	public String getNom() {
-		// TODO Auto-generated method stub
-		return null;
+	public CarteServiteur(String nom, int cout, int attaque, int vieMax, ICapacite capacite){
+		super(nom,cout);
+		setAttaque(attaque);
+		setVieMax(vieMax);
+		setVieActuelle(vieMax);
+		setCapacite(capacite);
 	}
 
-	@Override
-	public IJoueur getProprietaire() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getAttaque() {
+		return attaque;
 	}
 
-	@Override
-	public int getCout() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setAttaque(int attaque) {
+		if(attaque<0)
+			throw new IllegalArgumentException("Error: Attaque négatif");
+		this.attaque = attaque;
 	}
 
-	@Override
-	public boolean disparait() {
-		// TODO Auto-generated method stub
-		return false;
+	public int getVieMax() {
+		return vieMax;
 	}
 
-	@Override
-	public void executerEffetDebutTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
+	public void setVieMax(int vieMax) {
+		if(vieMax <= 0)
+			throw new IllegalArgumentException("Error: vieMax doit être strictement positive");
+		this.vieMax = vieMax;
 	}
 
-	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
+	public int getVieActuelle() {
+		return vieActuelle;
 	}
 
-	@Override
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
+	public void setVieActuelle(int vieActuelle) {
+		this.vieActuelle = vieActuelle;
 	}
 
-	@Override
-	public void executerEffetDisparition(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
+	public ICapacite getCapacite() {
+		return capacite;
 	}
 
-	@Override
-	public void executerEffetFinTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
+	public void setCapacite(ICapacite capacite) {
+		this.capacite = capacite;
 	}
+	
+	public boolean isJouable() {
+		return jouable;
+	}
+
+	public void setJouable(boolean jouable) {
+		this.jouable = jouable;
+	}
+
+	public String toString() {
+		String str;
+		if(capacite == null)
+			str =";]";
+		else
+			str = ";" + capacite +"]";
+		return super.toString() + " Attaque: "+ this.attaque + "; VieActuelle: "+ this.vieActuelle + str;
+	}
+
+	
 
 }

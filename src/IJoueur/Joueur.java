@@ -1,5 +1,6 @@
 package IJoueur;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import HearthstoneException.HearthstoneException;
 import HearthstoneException.ManaEpuiseException;
@@ -17,9 +18,9 @@ public class Joueur implements IJoueur{
 	private ArrayList<ICarte> deck;
 	private boolean finiTour;
 	
-	public Joueur(String pseudo, Hero hero) throws HearthstoneException {
+	public Joueur(String pseudo, String nomHero) throws HearthstoneException, CloneNotSupportedException {
 		setPseudo(pseudo);
-		setHero(hero);
+		setHero(nomHero);
 		setMana(1);
 		setStockMana(1);
 		jeu = new ArrayList<ICarte>();
@@ -46,10 +47,8 @@ public class Joueur implements IJoueur{
 		return this.hero;
 	}
 	
-	public void setHero(Hero hero) {
-		if(hero == null)
-			throw new IllegalArgumentException("Le hero ne doit pas être null!");
-		this.hero = hero;
+	public void setHero(String nomHero) throws HearthstoneException, CloneNotSupportedException {
+		this.hero = new Hero(nomHero);
 	}
 
 	@Override
@@ -85,15 +84,30 @@ public class Joueur implements IJoueur{
 	}
 	
 	@Override
-	public ICarte getCarteEnJeu(String nomCarte) {
-		// TODO Auto-generated method stub
-		return null;
+	public ICarte getCarteEnJeu(String nomCarte) throws HearthstoneException {
+		Iterator<ICarte> iterateur = jeu.iterator();
+		ICarte eleCarte;
+		do {
+			if(!iterateur.hasNext())
+				throw new HearthstoneException("La carte indiquée n'est pas en jeu");
+			eleCarte = iterateur.next();
+		}while(!(eleCarte.getNom().equals(nomCarte)));
+		
+		return eleCarte;
+		
 	}
 	
 	@Override
-	public ICarte getCarteEnMain(String nomCarteMain) {
-		// TODO Auto-generated method stub
-		return null;
+	public ICarte getCarteEnMain(String nomCarteMain) throws HearthstoneException {
+		Iterator<ICarte> iterateur = main.iterator();
+		ICarte eleCarte;
+		do {
+			if(!iterateur.hasNext())
+				throw new HearthstoneException("La carte indiquée n'est pas en main");
+			eleCarte = iterateur.next();
+		}while(!(eleCarte.getNom().equals(nomCarteMain)));
+		
+		return eleCarte;
 	}
 	
 	private void initialiseDeck(Hero hero) {

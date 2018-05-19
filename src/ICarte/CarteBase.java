@@ -1,9 +1,11 @@
 package ICarte;
 import Hero.Hero;
+import IJoueur.IJoueur;
 
 public abstract class CarteBase implements ICarte{
 	private String nom;
 	private int cout;
+	private IJoueur proprietaire;
 	
 	public CarteBase (String nom, int cout) {
 		setNom(nom);
@@ -40,8 +42,17 @@ public abstract class CarteBase implements ICarte{
 		return cout;
 	}
 	
+	public IJoueur getProprietaire() {
+		return proprietaire;
+	}
+	
+	public void setProprietaire(IJoueur proprietaire) {
+		this.proprietaire = proprietaire;
+	}
+	
 	public String toString() {
-		return "Carte[ Nom: " + this.nom + "; Cout: " + this.cout +"]";
+		//laisse l'accolade fermer dans les classes fils
+		return "Carte[ Nom: " + this.nom + "; Cout: " + this.cout +";";
 	}
 	
 	public boolean eauqls(Object obj) {

@@ -5,8 +5,8 @@ import Hero.Hero;
 import IJoueur.IJoueur;
 
 public class AttaqueDuHero extends Capacite{
-	private static String nomCapacite = "Attaque du hero";
-	private static String description = "Attaquer le héros adverse en toute circonstance";
+	private final static String nomCapacite = "Attaque du hero";
+	private final static String description = "Attaquer le héros adverse en toute circonstance";
 	public AttaqueDuHero(int degat) {
 		super(nomCapacite,description,degat);
 	}
