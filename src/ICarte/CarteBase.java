@@ -6,10 +6,19 @@ public abstract class CarteBase implements ICarte{
 	private String nom;
 	private int cout;
 	private IJoueur proprietaire;
+	private boolean jouable;
 	
 	public CarteBase (String nom, int cout) {
 		setNom(nom);
 		setCout(cout);
+		proprietaire = null;
+		jouable = false;
+	}
+	
+	public CarteBase (String nom, int cout, IJoueur proprietaire) {
+		setNom(nom);
+		setCout(cout);
+		setProprietaire(proprietaire);
 	}
 	
 	
@@ -67,5 +76,12 @@ public abstract class CarteBase implements ICarte{
 		return carte.getNom().equals(this.nom);
 	}
 	
-	
+	public boolean isJouable() {
+		return jouable;
+	}
+
+	public void setJouable(boolean jouable) {
+		this.jouable = jouable;
+	}
+
 }

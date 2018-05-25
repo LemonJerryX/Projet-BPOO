@@ -10,5 +10,11 @@ public interface ICapacite {
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException;	
 	public void executerEffetDisparition(Object cible) throws HearthstoneException;
 	public void executerEffetFinTour()throws HearthstoneException;
+	/**
+	 * Renvoie le cout du pouvoir de l'héros (UNIQUEMENT pour l'héros)
+	 * @return
+	 */
+	public int getCoutPouvoir();
+	
 		
 }

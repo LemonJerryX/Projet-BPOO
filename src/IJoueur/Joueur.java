@@ -5,6 +5,7 @@ import java.util.Iterator;
 import HearthstoneException.HearthstoneException;
 import HearthstoneException.ManaEpuiseException;
 import Hero.Hero;
+import ICarte.AttaqueMental;
 import ICarte.ICarte;
 
 public class Joueur implements IJoueur{
@@ -18,15 +19,15 @@ public class Joueur implements IJoueur{
 	private ArrayList<ICarte> deck;
 	private boolean finiTour;
 	
-	public Joueur(String pseudo, String nomHero) throws HearthstoneException, CloneNotSupportedException {
+	public Joueur(String pseudo, Hero hero) throws HearthstoneException, CloneNotSupportedException {
 		setPseudo(pseudo);
-		setHero(nomHero);
+		setHero(hero);
 		setMana(1);
 		setStockMana(1);
 		jeu = new ArrayList<ICarte>();
 		main = new ArrayList<ICarte>();
 		initialiseDeck(hero);
-		finiTour = false;
+		setFiniTour(false);
 	}
 	
 	@Override
@@ -47,8 +48,8 @@ public class Joueur implements IJoueur{
 		return this.hero;
 	}
 	
-	public void setHero(String nomHero) throws HearthstoneException, CloneNotSupportedException {
-		this.hero = new Hero(nomHero);
+	public void setHero(Hero hero) throws HearthstoneException, CloneNotSupportedException {
+		this.hero = hero;
 	}
 
 	@Override
@@ -111,73 +112,142 @@ public class Joueur implements IJoueur{
 	}
 	
 	private void initialiseDeck(Hero hero) {
-		// TODO Auto-generated method stub
+		deck = hero.getDeckHero();
+		deck.add(new AttaqueMental(this));
 		
 	}
 
 	public void piocher() throws HearthstoneException {
-		//TODO
+		int lengthList = this.deck.size();
+		long ms = System.currentTimeMillis();
+		int index;
+		if(lengthList > 0) {
+			index = (int)(ms%lengthList);
+			ICarte cartePiochee = this.deck.get(index);
+			this.main.add(cartePiochee);
+			this.deck.remove(index);
+		}
+		
 	
 	}
 	
 
 	public void jouerCarte(ICarte carte) throws HearthstoneException {
-		//TODO
-		
-		// On ajoute la carte au jeu (terrain)
-		this.jeu.add(carte);
-		// On supprime la carte de la main
-		this.main.add(null);
-		// On détruit la carte
+		if(!main.contains(carte))
+			throw new HearthstoneException("La Carte choisie n'est pas dans ta main");
+		else if(stockMana<carte.getCout())
+			throw new HearthstoneException("Tu n'as pas assez de mana pour utiliser cette carte");
+		else {
+			carte.executerEffetMiseEnJeu(null);
+			stockMana -= carte.getCout();
+			main.remove(carte);
+			jeu.add(carte);
+		}
 		
 	}
 	
 	@Override
 	public void jouerCarte(ICarte carte, Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
+		if(!main.contains(carte))
+			throw new HearthstoneException("La Carte choisie n'est pas dans ta main");
+		else if(stockMana<carte.getCout())
+			throw new HearthstoneException("Tu n'as pas assez de mana pour utiliser cette carte");
+		else {
+			carte.executerEffetMiseEnJeu(cible);
+			stockMana -= carte.getCout();
+			main.remove(carte);
+			jeu.add(carte);
+		}
 		
 	}
 	
 	@Override
 	public void utiliserCarte(ICarte carte, Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
+		if(!jeu.contains(carte))
+			throw new HearthstoneException("La Carte choisie n'est pas dans en jeu!");
+		else {
+			carte.executerAction(cible);
+			if(carte.disparait()) {
+				carte.executerEffetDisparition(cible);
+				perdreCarte(carte);
+			}
+		}
 		
 	}
 	
 	@Override
 	public void utiliserPouvoir(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
+		if(hero.getCapacite() == null)
+			throw new HearthstoneException("Ce héro n'a pas de capacite!");
+		else if(hero.isDejaUP())
+			throw new HearthstoneException("Vous avez déja utilisé le pouvoir pour ce tour!");
+		else if(stockMana<hero.getCapacite().getCoutPouvoir())
+			throw new HearthstoneException("Pas assez de mana pour executer le pouvoir du héros");
+		hero.utiliserPouvoir(cible);
+		hero.setDejaUP(true);
 		
 	}
 	
 	@Override
 	public void finirTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
+		Iterator<ICarte> iterateur = jeu.iterator();
+		while(iterateur.hasNext()) {
+			iterateur.next().setJouable(false);
+		}
 		
+		setFiniTour(true);
 	}
 	
 	@Override
 	public void perdreCarte(ICarte carte) throws HearthstoneException {
-		// TODO Auto-generated method stub
+		if(!jeu.contains(carte))
+			throw new HearthstoneException("La Carte choisie n'est pas dans en jeu!");
+		jeu.remove(carte);
 		
 	}
 	
 	@Override
 	public void prendreTour() throws HearthstoneException {
-		// TODO Auto-generated method stub
+		piocher();
+
+		setMana(mana+1);
+		setStockMana(mana);
 		
+		Iterator<ICarte> iterateur = jeu.iterator();
+		while(iterateur.hasNext()) {
+			iterateur.next().setJouable(true);
+		}
+		
+		hero.setDejaUP(false);;
+	}
+	
+	
+	public boolean isFiniTour() {
+		return finiTour;
+	}
+
+	public void setFiniTour(boolean finiTour) {
+		this.finiTour = finiTour;
 	}
 	
 	public String toString() {
-		//TODO
-		return null;
+		String strJeu ="";
+		Iterator<ICarte> iterateur = jeu.iterator();
+		while(iterateur.hasNext()) {
+			strJeu = strJeu + iterateur.next();
+		}
+		
+		String strMain = "";
+		iterateur = main.iterator();
+		while(iterateur.hasNext()) {
+			strMain = strMain + iterateur.next();
+		}
+		
+		return "Joueur [pseudo : " + this.pseudo + "; Héros: " + this.hero + "; Mana: " + this.mana + "; StockMana: " + this.stockMana + "Cartes Main: "+ strMain +"; Cartes Jeu: " +strJeu+"]"; 
 	}
 	
-	public boolean equals(Object obj) {
-		//TODO
-		return false;
-	}
 	
+
 
 
 }

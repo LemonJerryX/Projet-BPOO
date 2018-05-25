@@ -14,9 +14,15 @@ public final class AttaqueMental extends CarteSort{
 	private static final ICapacite capacite = new AttaqueDuHero(5);
 	
 	
-	public AttaqueMental(IJoueur joueur) {
+	public AttaqueMental() {
 		super(nom,cout, capacite);
+		setProprietaire(null);
 		
+	}
+	
+	public AttaqueMental(IJoueur proprietaire) {
+		super(nom,cout, capacite);
+		setProprietaire(proprietaire);
 	}
 	
 	/* (non-Javadoc)
@@ -68,6 +74,7 @@ public final class AttaqueMental extends CarteSort{
 		
 	}
 
+	
 	
 
 }

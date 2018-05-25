@@ -51,5 +51,10 @@ public interface ICarte extends Cloneable{
 	 */
 	public void executerEffetFinTour()throws HearthstoneException;
 	
+	/**
+	 * @param jouable
+	 */
+	public void setJouable(boolean jouable);
+	
 	
 }

@@ -3,66 +3,36 @@ import java.util.*;
 
 import HearthstoneException.*;
 import ICapacite.*;
+import ICarte.ICarte;
+import IJoueur.IJoueur;
 
-public class Hero implements Cloneable{
-	private static ArrayList<Hero> listHeros;
+public class Hero{
 	private String nom;
 	private int vieMax;
 	private int vieActuelle;
 	private ICapacite capacite;
-	
-	
-	/**
-	 * Générer automatiquement une liste d'heros permettant le joueur de colonner directement depuis la liste
-	 * @throws HearthstoneException
-	 */
-	public static final void setListHeros() throws HearthstoneException {
-		listHeros = new ArrayList<Hero>();
-		//TODO la capacité de hero reste à modifier, j'ai mis une capacité pour tester
-		Hero HeroAjoute = new Hero("Jaina",15,new AttaqueDuHero(1));
-		listHeros.add(HeroAjoute);
-		
-		HeroAjoute = new Hero("Rexxar",15,new AttaqueDuHero(1));
-		listHeros.add(HeroAjoute);
-	}
+	protected ArrayList<ICarte> deckHero;
+	private IJoueur joueur;
+	private boolean dejaUP;
 	
 	/**
-	 * Construire un hero en clonnant un héro dans la liste d'heros
-	 * @param nom
-	 * @throws HearthstoneException 
-	 * @throws CloneNotSupportedException 
-	 */
-	public Hero(String nom) throws HearthstoneException, CloneNotSupportedException {
-		Iterator<Hero> iterateur = listHeros.iterator();
-		Hero eleHero;
-		do {
-			if(!iterateur.hasNext())
-				throw new HearthstoneException("Le hero indiqué n'existe pas");
-			eleHero = iterateur.next();
-		}while(!(eleHero.getNom().equals(nom)));
-		
-		Hero hero = (Hero) eleHero.clone();
-		
-		setNom(hero.getNom());
-		setVieMax(hero.getVieMax());
-		setVieActuelle(hero.getVieActuelle());
-		this.capacite = hero.getCapacite();	
-	}
-	
-	/**
-	 * constructeur interne pour ajouter un hero dans la liste
 	 * @param nom
 	 * @param vieMax
 	 * @param cap
 	 * @throws HearthstoneException
 	 */
-	private Hero(String nom,int vieMax, ICapacite cap) throws HearthstoneException {
+	public Hero(String nom,int vieMax, ICapacite cap) throws HearthstoneException {
 		setNom(nom);
 		setVieMax(vieMax);
 		setVieActuelle(vieMax);
 		this.capacite = cap;	
+		setDeckHero();
+		setDejaUP(false);
+		joueur = null;
 	}
 	
+
+
 
 	//Setters et getters
 	private void setNom(String nom) {
@@ -100,10 +70,6 @@ public class Hero implements Cloneable{
 		return capacite;
 	}
 	
-	protected Object clone() throws CloneNotSupportedException {
-	    return (Hero)super.clone();
-	}
-	
 	public void etreAttaque(int degat) {
 		if(degat<0) {
 			throw new IllegalArgumentException("Error: Degat negatif!");
@@ -116,7 +82,7 @@ public class Hero implements Cloneable{
 	}
 	
 	public String toString() {
-		return "NomHero: " + this.nom + " Vie: " + this.vieActuelle;
+		return "NomHero: " + this.nom + " Vie: " + this.vieActuelle + this.capacite;
 	}
 	
 	public boolean equals(Object obj) {
@@ -129,6 +95,36 @@ public class Hero implements Cloneable{
 		Hero hero = (Hero) obj;
 		//Pour l'instant, je considère que deux héros de même nom sont identiques, reste à vérifier
 		return hero.getNom().equals(this.nom);
+	}
+
+
+	public ArrayList<ICarte> getDeckHero() {
+		return (new ArrayList<ICarte>(deckHero));
+	}
+
+
+	public void setDeckHero() {
+		
+	}
+
+	public IJoueur getJoueur() {
+		return joueur;
+	}
+
+	public void setJoueur(IJoueur joueur) {
+		this.joueur = joueur;
+	}
+	
+	public void utiliserPouvoir(Object cible) throws HearthstoneException {
+		capacite.executerAction(cible);
+	}
+
+	public boolean isDejaUP() {
+		return dejaUP;
+	}
+
+	public void setDejaUP(boolean dejaUP) {
+		this.dejaUP = dejaUP;
 	}
 	
 	

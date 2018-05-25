@@ -5,12 +5,14 @@ public abstract class Capacite implements ICapacite{
 	private String description;
 	private int degat;
 	private boolean dejaUtilise;
+	private int coutPouvoir;
 	
 	public Capacite(String nom, String description, int degat) {
 		setNomCapacite(nom);
 		setDescription(description);
 		setDegat(degat);
 		setDejaUtilise(false);
+		setCoutPouvoir(0);
 	}
 	
 	public Capacite(String nom, String description) {
@@ -18,7 +20,19 @@ public abstract class Capacite implements ICapacite{
 		setDescription(description);
 		setDegat(0);
 		setDejaUtilise(false);
+		setCoutPouvoir(0);
 	}
+	
+	//Un constructeur pour le pouvoir Hero
+	public Capacite(String nom, String description, int degat,int coutPouvoir) {
+		setNomCapacite(nom);
+		setDescription(description);
+		setDegat(degat);
+		setDejaUtilise(false);
+		setCoutPouvoir(coutPouvoir);
+	}
+	
+	
 	
 	private void setDegat(int degat) {
 		if(degat < 0)
@@ -87,6 +101,16 @@ public abstract class Capacite implements ICapacite{
 
 	public void setDejaUtilise(boolean dejaUtilise) {
 		this.dejaUtilise = dejaUtilise;
+	}
+
+	public int getCoutPouvoir() {
+		return coutPouvoir;
+	}
+
+	public void setCoutPouvoir(int coutPouvoir) {
+		if(coutPouvoir < 0)
+			throw new IllegalArgumentException("le coût ne peut pas être negatif!");
+		this.coutPouvoir = coutPouvoir;
 	}
 
 }

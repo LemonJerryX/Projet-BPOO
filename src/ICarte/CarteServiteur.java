@@ -1,5 +1,6 @@
 package ICarte;
 import ICapacite.ICapacite;
+import IJoueur.IJoueur;
 
 
 public abstract class CarteServiteur extends CarteBase{
