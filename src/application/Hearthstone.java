@@ -207,7 +207,8 @@ public class Hearthstone {
 		    			break;
 		    }
 			
-			
+			if(plateau.getAdversaire(joueurCourant).getHero().getVieActuelle()<=0)
+				plateau.gagnePartie(joueurCourant);
 			
 			
 		}

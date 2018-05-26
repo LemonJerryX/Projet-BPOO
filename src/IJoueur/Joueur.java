@@ -2,9 +2,8 @@ package IJoueur;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import HearthstoneException.HearthstoneException;
-import HearthstoneException.ManaEpuiseException;
-import Hero.Hero;
+import HearthstoneException.*;
+import Hero.*;
 import ICarte.*;
 
 public class Joueur implements IJoueur{
@@ -69,7 +68,7 @@ public class Joueur implements IJoueur{
 	
 	public void setStockMana(int stockMana) throws HearthstoneException{
 		if(stockMana < 0)
-			throw new ManaEpuiseException("Error: mana négatif");
+			throw new HearthstoneException("Error: mana négatif");
 		this.stockMana = stockMana;
 	}
 	

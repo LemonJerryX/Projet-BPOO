@@ -7,21 +7,23 @@ import HearthstoneException.HearthstoneException;
 import ICapacite.*;
 import IJoueur.IJoueur;
 
-public final class AttaqueMental extends CarteSort{
+public class AttaqueMental extends CarteSort{
 	
 	private static final String nom = "Attaque Mental";
 	private static final int cout = 2;
-	private static final ICapacite capacite = new AttaqueDuHero(5);
+	private ICapacite capacite = new AttaqueDuHero(5);
 	
 	
 	public AttaqueMental() {
-		super(nom,cout, capacite);
+		super(nom,cout,null);
+		super.setCapacite(capacite);
 		setProprietaire(null);
 		
 	}
 	
 	public AttaqueMental(IJoueur proprietaire) {
-		super(nom,cout, capacite);
+		super(nom,cout,null);
+		super.setCapacite(capacite);
 		setProprietaire(proprietaire);
 	}
 	
