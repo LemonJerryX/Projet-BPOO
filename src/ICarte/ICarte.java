@@ -56,5 +56,8 @@ public interface ICarte extends Cloneable{
 	 */
 	public void setJouable(boolean jouable);
 	
+	public boolean estJouable();
+	
+	
 	
 }

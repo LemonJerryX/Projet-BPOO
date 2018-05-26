@@ -41,4 +41,22 @@ public class InvocationDesChiens extends Capacite{
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see ICapacite.ICapacite#cibleSpecifique()
+	 */
+	@Override
+	public boolean cibleSpecifique() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see ICapacite.ICapacite#getCibleSpecifique()
+	 */
+	@Override
+	public String getCibleSpecifique() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

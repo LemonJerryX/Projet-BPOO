@@ -5,8 +5,7 @@ import java.util.Iterator;
 import HearthstoneException.HearthstoneException;
 import HearthstoneException.ManaEpuiseException;
 import Hero.Hero;
-import ICarte.AttaqueMental;
-import ICarte.ICarte;
+import ICarte.*;
 
 public class Joueur implements IJoueur{
 	
@@ -22,8 +21,8 @@ public class Joueur implements IJoueur{
 	public Joueur(String pseudo, Hero hero) throws HearthstoneException, CloneNotSupportedException {
 		setPseudo(pseudo);
 		setHero(hero);
-		setMana(1);
-		setStockMana(1);
+		setMana(0);
+		setStockMana(0);
 		jeu = new ArrayList<ICarte>();
 		main = new ArrayList<ICarte>();
 		initialiseDeck(hero);
@@ -71,7 +70,7 @@ public class Joueur implements IJoueur{
 	public void setStockMana(int stockMana) throws HearthstoneException{
 		if(stockMana < 0)
 			throw new ManaEpuiseException("Error: mana négatif");
-			
+		this.stockMana = stockMana;
 	}
 	
 	@Override
@@ -156,7 +155,10 @@ public class Joueur implements IJoueur{
 			carte.executerEffetMiseEnJeu(cible);
 			stockMana -= carte.getCout();
 			main.remove(carte);
-			jeu.add(carte);
+			if(!(carte instanceof CarteSort)) {
+				jeu.add(carte);
+			}
+			
 		}
 		
 	}
@@ -234,16 +236,26 @@ public class Joueur implements IJoueur{
 		String strJeu ="";
 		Iterator<ICarte> iterateur = jeu.iterator();
 		while(iterateur.hasNext()) {
-			strJeu = strJeu + iterateur.next();
+			strJeu = strJeu + "\n		" + iterateur.next();
 		}
 		
 		String strMain = "";
 		iterateur = main.iterator();
 		while(iterateur.hasNext()) {
-			strMain = strMain + iterateur.next();
+			strMain = strMain + "\n		" +iterateur.next();
 		}
 		
-		return "Joueur [pseudo : " + this.pseudo + "; Héros: " + this.hero + "; Mana: " + this.mana + "; StockMana: " + this.stockMana + "Cartes Main: "+ strMain +"; Cartes Jeu: " +strJeu+"]"; 
+		return "Joueur [pseudo : " + this.pseudo + "; Mana: " + this.mana + "; StockMana: " + this.stockMana +  "];\n	Héros:[ " + this.hero + "];\n	Cartes Main: "+ strMain +"; \n	Cartes Jeu: " +strJeu; 
+	}
+
+	/* (non-Javadoc)
+	 * @see IJoueur.IJoueur#incrementeMana()
+	 */
+	@Override
+	public void incrementeMana() {
+		this.mana ++;
+		this.stockMana = this.mana;
+		
 	}
 	
 	

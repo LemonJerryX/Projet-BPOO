@@ -22,4 +22,8 @@ public abstract class CarteSort extends CarteBase{
 		return super.toString() + capacite +"]";
 	}
 	
+	public boolean estJouable() {
+		return true;
+	}
+	
 }

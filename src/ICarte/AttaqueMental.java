@@ -54,7 +54,7 @@ public final class AttaqueMental extends CarteSort{
 	 */
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
+		capacite.executerAction(cible);
 		
 	}
 	
@@ -63,7 +63,6 @@ public final class AttaqueMental extends CarteSort{
 	 */
 	@Override
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {
-		AttaqueMental.capacite.executerAction(cible);
 	}
 	
 	/* (non-Javadoc)

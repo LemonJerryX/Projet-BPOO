@@ -16,7 +16,7 @@ public abstract class CarteServiteur extends CarteBase{
 		setVieMax(vieMax);
 		setVieActuelle(vieMax);
 		this.capacite = null;
-		setJouable(true);
+		setJouable(false);
 	}
 	
 	public CarteServiteur(String nom, int cout, int attaque, int vieMax, ICapacite capacite){
@@ -63,7 +63,7 @@ public abstract class CarteServiteur extends CarteBase{
 		this.capacite = capacite;
 	}
 	
-	public boolean isJouable() {
+	public boolean estJouable() {
 		return jouable;
 	}
 

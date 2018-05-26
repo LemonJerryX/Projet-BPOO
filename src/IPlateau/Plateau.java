@@ -120,6 +120,12 @@ public class Plateau implements IPlateau{
 		
 	}
 	
+	public void nouvelTour(IJoueur joueur) throws HearthstoneException {
+		joueur.incrementeMana();
+		joueur.piocher();
+		joueur.getHero().setDejaUP(false);
+	}
+	
 	public String toString(){
 		IJoueur adversaire = null;
 		try {
@@ -128,9 +134,8 @@ public class Plateau implements IPlateau{
 			e.printStackTrace();
 		}
 		String str = "**************************************************\n";
-		str += "Joueur courant:\n";
-		str += joueurCourant+"\n";
-		str += joueurCourant.getHero().getCapacite()+"\n";
+		str += "Joueur courant:\n	";
+		str += joueurCourant + "\n";
 		str += "**************************************************\n";
 		
 		str += "\n\n";
@@ -146,18 +151,13 @@ public class Plateau implements IPlateau{
 		str += "\n\n";
 		
 		str += "**************************************************\n";
-		str += "Joueur courant:\n";
+		str += "Joueur adversaire:\n		";
 		str += adversaire+"\n";
 		str += adversaire.getHero().getCapacite()+"\n";
 		str += "**************************************************\n";
 		
 		str += "\n\n";
 		
-		str += "Que veux-tu faire ?\n" + 
-				"1. Finir le tour\n" + 
-				"2. Jouer une carte de ta main\n" + 
-				"3. Utiliser une carte en jeu\n" + 
-				"4. Utiliser le pouvoir du hйros";
 		return str;
 		
 		

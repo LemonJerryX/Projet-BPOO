@@ -15,6 +15,12 @@ public interface ICapacite {
 	 * @return
 	 */
 	public int getCoutPouvoir();
+	/**
+	 * @return
+	 */
+	public boolean cibleSpecifique();
+	
+	public String getCibleSpecifique();
 	
 		
 }

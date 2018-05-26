@@ -30,9 +30,18 @@ public class AttaqueDuHero extends Capacite{
 				
 			}
 		}
-		
-		
+		else if(cible instanceof Hero) {
+			setDejaUtilise(true);
+			((Hero) cible).etreAttaque(this.getDegat());;
+			//TODO À revoir ce qu'il faudra faire quand le hero meurt
+			if(((Hero) cible).perdre()) {
+				
+			}
+		}
 	}
+		
+		
+
 
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
@@ -50,6 +59,24 @@ public class AttaqueDuHero extends Capacite{
 	public void executerEffetFinTour() throws HearthstoneException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see ICapacite.ICapacite#cibleSpecifique()
+	 */
+	@Override
+	public boolean cibleSpecifique() {
+		
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see ICapacite.ICapacite#getCibleSpecifique()
+	 */
+	@Override
+	public String getCibleSpecifique() {
+		// TODO Auto-generated method stub
+		return "hero";
 	}
 	
 

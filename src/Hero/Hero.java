@@ -11,7 +11,8 @@ public class Hero{
 	private int vieMax;
 	private int vieActuelle;
 	private ICapacite capacite;
-	protected ArrayList<ICarte> deckHero;
+	private int coutPouvoir;
+	protected ArrayList<ICarte> deckHero = new ArrayList<ICarte>();
 	private IJoueur joueur;
 	private boolean dejaUP;
 	
@@ -21,13 +22,14 @@ public class Hero{
 	 * @param cap
 	 * @throws HearthstoneException
 	 */
-	public Hero(String nom,int vieMax, ICapacite cap) throws HearthstoneException {
+	public Hero(String nom,int vieMax, ICapacite cap,int coutPouvoir) throws HearthstoneException {
 		setNom(nom);
 		setVieMax(vieMax);
 		setVieActuelle(vieMax);
 		this.capacite = cap;	
 		setDeckHero();
 		setDejaUP(false);
+		this.coutPouvoir = coutPouvoir;
 		joueur = null;
 	}
 	
@@ -82,7 +84,7 @@ public class Hero{
 	}
 	
 	public String toString() {
-		return "NomHero: " + this.nom + " Vie: " + this.vieActuelle + this.capacite;
+		return "NomHero: " + this.nom + "; Vie: " + this.vieActuelle + "; "+this.capacite;
 	}
 	
 	public boolean equals(Object obj) {
@@ -127,5 +129,8 @@ public class Hero{
 		this.dejaUP = dejaUP;
 	}
 	
+	public int getCoutPouvoir(){
+		return coutPouvoir;
+	}
 	
 }

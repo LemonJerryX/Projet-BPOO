@@ -24,6 +24,7 @@ public interface IJoueur {
 	 * @return
 	 */
 	public int getStockMana();
+	public void incrementeMana();
 	public ArrayList<ICarte> getJeu();
 	public ArrayList<ICarte> getMain();
 	public ICarte getCarteEnJeu(String nomCarte) throws HearthstoneException;
@@ -56,6 +57,7 @@ public interface IJoueur {
 	public void finirTour() throws HearthstoneException;
 	public void perdreCarte(ICarte carte) throws HearthstoneException;
 	public void prendreTour() throws HearthstoneException;
+	public void setStockMana(int stockMana) throws HearthstoneException;
 	
 	
 }
